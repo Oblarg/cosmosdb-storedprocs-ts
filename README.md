@@ -10,6 +10,8 @@ Additionally, the use of Typescript has the usual benefits of added compile-time
 
 Compare the following identical stored procedures (the former using the default API, the latter using this webpack-based setup):
 
+Default:
+
 ```javascript
 ({ id, patch }) => {
   getContext()
@@ -40,6 +42,8 @@ Compare the following identical stored procedures (the former using the default 
     );
 };
 ```
+
+With this tool:
 
 ```typescript
 import {readDocument, replaceDocument} from "../../util/AsyncDb";
