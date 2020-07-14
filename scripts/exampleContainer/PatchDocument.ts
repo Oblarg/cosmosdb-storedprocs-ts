@@ -1,4 +1,4 @@
-// We can write our stored procedure now as an ordinary Typescript IIFE.
+// We can write our stored procedure now as an ordinary Typescript function.
 // We can even import arbitrary node dependencies!
 
 import {readDocument, replaceDocument} from "../../util/AsyncDb";
