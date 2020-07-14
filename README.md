@@ -6,7 +6,59 @@ The default CosmosDB Stored Procedure API is callback-based, and thus extremely 
 
 Additionally, the use of Typescript has the usual benefits of added compile-time safety.
 
-## How does it work?
+## Why should I use this?
+
+Compare the following identical stored procedures (the former using the default API, the latter using this webpack-based setup):
+
+```javascript
+({ id, patch }) => {
+  getContext()
+    .getCollection()
+    .readDocument(
+      `${getContext().getCollection().getAltLink()}/docs/${id}`,
+      (err, res) => {
+        if (err) {
+          abort(err);
+        }
+
+        const updated = Object.assign(res, patch);
+
+        getContext()
+          .getCollection()
+          .replaceDocument(
+            `${getContext().getCollection().getAltLink()}/docs/${id}`,
+            updated,
+            (err) => {
+              if (err) {
+                abort(err);
+              }
+
+              getContext().getResponse().setBody(updated);
+            }
+          );
+      }
+    );
+};
+```
+
+```typescript
+import {readDocument, replaceDocument} from "../../util/AsyncDb";
+import {handleError} from "../../util/HandleError";
+
+const patchDocument = async ({id, patch} : {id: string, patch: {}}) => {
+  const updated = Object.assign(await readDocument(id), patch);
+
+  await replaceDocument(id, updated);
+
+  getContext()
+    .getResponse()
+    .setBody(updated);
+};
+
+patchDocument(args).catch(handleError);
+```
+
+## How does this work?
 
 The basic idea is to use webpack to both compile the Typescript and to scope-hoist any included dependencies inline into a single function.
 
@@ -40,15 +92,17 @@ The `output` directory contains the compiled javascript webpack output, with all
 
 The index consists of a very simple example of how to call an uploaded stored procedure.
 
-## How do I use it?
+## How do I use this?
 
-First, fork and clone the repository.
+1. Fork and clone the repository.
 
-Once you've cloned the repository, being by modifying `database.js` to include your actual connection string, database name, and container names.  Then, modify the subdirectories of `scripts` and `output` to match the names of your database containers.
+2. Modify `database.js` to include your actual connection string, database name, and container names.
 
-Once that is done, you can freely write stored procedures following the general pattern I've laid out in the example.
+3. Modify the subdirectories of `scripts` and `output` to match the names of your database containers.
 
-To run the build script, simply run `npm run build-storedprocs` (make sure you have run `npm install` first!).
+4. Write stored procedures in `scripts` following the general pattern I've laid out in the example.
+
+5. Deploy your scripts to CosmosDB with `npm run build-storedprocs` (make sure you have run `npm install` first!).
 
 ## Drawbacks/Issues
 
