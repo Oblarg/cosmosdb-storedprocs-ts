@@ -1,0 +1,27 @@
+{
+  "name": "cosmosdb-storedprocs-ts",
+  "version": "1.0.0",
+  "description": "tutorial for cosmosdb storedprocs using typescript and node dependencies",
+  "main": "index.js",
+  "scripts": {
+    "build-storedprocs": "node ./BuildStoredProcs.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oblarg/cosmosdb-storedprocs-ts.git"
+  },
+  "author": "Eli Barnett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Oblarg/cosmosdb-storedprocs-ts/issues"
+  },
+  "homepage": "https://github.com/Oblarg/cosmosdb-storedprocs-ts#readme",
+  "dependencies": {
+    "@azure/cosmos": "^3.7.4",
+    "@types/documentdb-server": "0.0.33",
+    "awesome-typescript-loader": "^5.2.1",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.6",
+    "webpack": "^4.43.0"
+  }
+}
