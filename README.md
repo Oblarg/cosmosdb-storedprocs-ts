@@ -98,7 +98,7 @@ The index consists of a very simple example of how to call an uploaded stored pr
 
 ## How do I use this?
 
-1. Fork and clone the repository.
+1. Clone the repository.
 
 2. Modify `database.js` to include your actual connection string, database name, and container names.
 
