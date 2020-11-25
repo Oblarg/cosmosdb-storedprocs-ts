@@ -2,7 +2,7 @@
 
 This repository contains a small set of example code to demonstrate how to use webpack to write Azure CosmosDB stored procedures in Typescript with node dependencies.
 
-The default CosmosDB Stored Procedure API is callback-based, and thus extremely verbose.  The ability to scope-hoist node dependencies inline allows us to wrap the default API with `promisify`, turning it into a much more-tractable Promise-based API.
+The default CosmosDB Stored Procedure API is callback-based, and thus extremely verbose.  The ability to bundle node dependencies inline allows us to wrap the default API with `promisify`, turning it into a much more-tractable Promise-based API.
 
 Additionally, the use of Typescript has the usual benefits of added compile-time safety.
 
@@ -64,7 +64,7 @@ patchDocument(args).catch(handleError);
 
 ## How does this work?
 
-The basic idea is to use webpack to both compile the Typescript and to scope-hoist any included dependencies inline into a single function.
+The basic idea is to use webpack to both compile the Typescript and to bundle any included dependencies inline into a single function.
 
 This is somewhat less-trivial of a task than it might initially seem, because Azure CosmosDB's documentation is somewhat nebulous about the format it actually accepts.  Through trial-and-error, I have determined that the easiest way to generate output that CosmosDB will accept is to define the stored procedure body as an [IIFE](https://en.wikipedia.org/wiki/Immediately_invoked_function_expression), compile the IIFE with webpack, and then wrap the output in a lambda that passes the appropriate function argument.  Thus, what is ultimately sent to CosmosDB looks like this:
 
@@ -90,7 +90,7 @@ The `scripts` directory contains the source for the stored procedure scripts the
 
 ### output
 
-The `output` directory contains the compiled javascript webpack output, with all node dependencies scope-hoisted inline.  The compiled output is effectively temporary data (the build script immediately uploads it to CosmosDb after compilation), so this directory should generally be gitignored, but a piece of example output has been included here for the sake of clarity.
+The `output` directory contains the compiled javascript webpack output, with all node dependencies bundled inline.  The compiled output is effectively temporary data (the build script immediately uploads it to CosmosDb after compilation), so this directory should generally be gitignored, but a piece of example output has been included here for the sake of clarity.
 
 ### index
 
