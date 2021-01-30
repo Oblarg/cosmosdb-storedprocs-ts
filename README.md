@@ -2,7 +2,7 @@
 
 This repository contains a small set of example code to demonstrate how to use webpack to write Azure CosmosDB stored procedures in Typescript with node dependencies.
 
-The default CosmosDB Stored Procedure API is callback-based, and thus extremely verbose.  The ability to bundle node dependencies inline allows us to wrap the default API with `promisify`, turning it into a much more-tractable Promise-based API.
+The default CosmosDB Stored Procedure API is callback-based, and thus extremely verbose.  Bundling node dependencies inline allows us to wrap the default API with `promisify`, turning it into a much more-tractable Promise-based API.
 
 Additionally, the use of Typescript has the usual benefits of added compile-time safety.
 
